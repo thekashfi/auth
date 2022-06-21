@@ -4,13 +4,14 @@ $request = str_replace('/auth', '', rtrim($_SERVER['REQUEST_URI'], '/'));
 
 switch ($request) {
     case '':
-        require './home.php';
-        break;
     case '/home':
         require './home.php';
         break;
-    case '/login':
+    case '/log':
         require './login.php';
+        break;
+    case '/register':
+        require './register.php';
         break;
     default:
         header('HTTP/1.0 404 Not Found');

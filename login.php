@@ -1,1 +1,1 @@
-login is here
+<?php die('login');

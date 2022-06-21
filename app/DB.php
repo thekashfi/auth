@@ -18,7 +18,17 @@ class DB
     static function createUser($name, $email, $password) {
         // TODO: hash the password in appropriate way.
         $sql = "insert into users (name, email, password) values (?, ?, ?)";
-        return (new self)->pdo->prepare($sql)->execute([$name, $email, $password]);
+        $pdo = (new self)->pdo;
+        if ($pdo->prepare($sql)->execute([$name, $email, $password]))
+            return $pdo->lastInsertId();
+    }
+
+    static function findUser($email, $password = false) {
+        // TODO: hash the password in appropriate way.
+        $sql = "insert into users (name, email, password) values (?, ?, ?)";
+        $pdo = (new self)->pdo;
+        if ($pdo->prepare($sql)->execute([$name, $email, $password]))
+            return $pdo->lastInsertId();
     }
 
     public function connect()

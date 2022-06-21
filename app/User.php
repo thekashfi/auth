@@ -16,11 +16,16 @@ class User
 
         $this->validation();
 
-        if (DB::createUser($name, $email, $password)) {
-            // login him (make seesion and give the cookie)
+        if ($id = DB::createUser($name, $email, $password)) {
             // TODO: check if user doesn't exists already! (email)
-            die('logged in');
-            $this->login();
+            // login him (make seesion and give the cookie)
+
+            $_SESSION['logged_in'] = true;
+            $_SESSION['id'] = $id;
+            $_SESSION['name'] = $this->name;
+            $_SESSION['email'] = $this->email;
+
+            header('location: ' . URL . '/dashboard');
         }
 
         // redirect to dashboard page
@@ -39,6 +44,11 @@ class User
 
         // login him (make seesion and give the cookie)
         $this->login();
+    }
+
+    public function find()
+    {
+        return DB::findUser($this->email, $this->password);
     }
 
     public function validation()
@@ -69,13 +79,4 @@ class User
             die('password can\'t be more than 100 characters');
         }
     }
-
-    public function find()
-    {
-        return DB::findUser($this->email, $this->password);
-    }
-
-//    public function clean($text) {
-//        return htmlspecialchars(stripslashes(trim($text)));
-//    }
 }

@@ -12,38 +12,38 @@ class User
     {
         $this->name = $name; // TODO: refactor needed!
         $this->email = $email;
-        $this->password = $password;
+        $this->password = md5($password);
 
         $this->validation();
 
-        if ($id = DB::createUser($name, $email, $password)) {
+        if ($id = DB::createUser($name, $email, $this->password)) {
             // TODO: check if user doesn't exists already! (email)
             // login him (make seesion and give the cookie)
 
-            $_SESSION['logged_in'] = true;
-            $_SESSION['id'] = $id;
-            $_SESSION['name'] = $this->name;
-            $_SESSION['email'] = $this->email;
-
-            header('location: ' . URL . '/dashboard');
+            $user = DB::find($id);
+            $_SESSION['user'] = $user;
+            redirect('dashboard');
         }
-
-        // redirect to dashboard page
     }
 
     public function login($email, $password)
     {
         $this->name = false;
         $this->email = $email;
-        $this->password = $password; // TODO: refactor needed!
+        $this->password = md5($password); // TODO: refactor needed!
         $this->validation();
 
-        if ($this->find()) {
-
+        if ($user = $this->find()) {
+            $_SESSION['user'] = $user;
+            redirect('dashboard');
         }
+    }
 
-        // login him (make seesion and give the cookie)
-        $this->login();
+    public static function logout() {
+        if (isset($_SESSION['user'])) {
+            session_destroy();
+            redirect('home');
+        }
     }
 
     public function find()

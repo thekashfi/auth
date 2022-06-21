@@ -7,6 +7,6 @@
     <title>Home</title>
 </head>
 <body>
-<a href="register">register</a> | <a href="log">log</a>
+<a href="log">log</a> | <a href="register">register</a> | <a href="dashboard">dashboard</a>
 </body>
 </html>

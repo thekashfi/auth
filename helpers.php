@@ -2,15 +2,19 @@
 
 function middleware($name) {
     if ($name === 'logged_in') {
-        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-            header('location: ' . URL);
-            exit;
+        if (isset($_SESSION['user'])) {
+            redirect('dashboard');
         }
     }
 
     if ($name === 'auth') {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+        if (!isset($_SESSION['user'])) {
             die('you don\'t have access to this route. GET OUTTA HERE!');
         }
     }
+}
+
+function redirect($path) {
+    header('location: ' . URL . ltrim($path, '/'));
+    exit;
 }

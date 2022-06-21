@@ -4,6 +4,8 @@ require_once './app/User.php';
 require_once './app/DB.php';
 require_once './helpers.php';
 
+use App\User;
+
 define('URL', 'http://localhost/auth/');
 session_start();
 $path = str_replace('/auth', '', rtrim($_SERVER['REQUEST_URI'], '/'));
@@ -20,6 +22,10 @@ switch ($path) {
     case '/register':
         middleware('logged_in');
         require './register.php';
+        break;
+    case '/logout':
+        middleware('auth');
+        User::logout();
         break;
     case '/dashboard':
         middleware('auth');

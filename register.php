@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
-<body>register is here
+<body>
+Register Form <br><br>
 <form action="" method="post">
     <input type="text" name="name" placeholder="name">
     <input type="email" name="email" placeholder="email">

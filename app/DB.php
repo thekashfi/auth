@@ -16,19 +16,26 @@ class DB
     }
 
     static function createUser($name, $email, $password) {
-        // TODO: hash the password in appropriate way.
-        $sql = "insert into users (name, email, password) values (?, ?, ?)";
+        $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
         $pdo = (new self)->pdo;
         if ($pdo->prepare($sql)->execute([$name, $email, $password]))
             return $pdo->lastInsertId();
     }
 
     static function findUser($email, $password = false) {
-        // TODO: hash the password in appropriate way.
-        $sql = "insert into users (name, email, password) values (?, ?, ?)";
+        $sql = "SELECT * FROM users WHERE email = ? AND password = ? LIMIT 1";
         $pdo = (new self)->pdo;
-        if ($pdo->prepare($sql)->execute([$name, $email, $password]))
-            return $pdo->lastInsertId();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$email, $password]);
+        return $stmt->fetchObject();
+    }
+
+    static function find($id) {
+        $sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
+        $pdo = (new self)->pdo;
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($id);
+        return $stmt->fetchObject();
     }
 
     public function connect()

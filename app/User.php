@@ -4,6 +4,8 @@ namespace App;
 
 class User
 {
+    use Validators;
+
     private $name;
     private $email;
     private $password;
@@ -16,7 +18,7 @@ class User
 
         $this->validation();
 
-        if ($id = DB::createUser($name, $email, $this->password)) {
+        if ($id = DB::createUser($this->name, $this->email, $this->password)) {
             // TODO: check if user doesn't exists already! (email)
             // login him (make seesion and give the cookie)
 
@@ -53,30 +55,17 @@ class User
 
     public function validation()
     {
-        // TODO: put these to a validationTrait helper
         // TODO: put all method except login&register to other traits
         // name: req|max:100
         if ($this->name !== false) {
-            if (empty(trim($this->name))) {
-                die('fill the name field');
-            }
-            if (strlen(trim($this->name)) > 100) {
-                die('name shouldn\'t be more than 100 characters');
-            }
+            $this->required($this->name, 'name');
+            $this->maxLength($this->name, 'name');
         }
         // email: req|email|max:100
-        if (empty(trim($this->email))) {
-            die('fill the email field');
-        }
-        if (strlen(trim($this->email)) > 100) {
-            die('email can\'t be more than 100 characters');
-        }
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-            die('invalid email format');
-        }
-        // password: text|max:100
-        if (strlen(trim($this->email)) > 100) {
-            die('password can\'t be more than 100 characters');
-        }
+        $this->required($this->email, 'email');
+        $this->email($this->email);
+        $this->maxLength($this->email, 'email');
+        // password: max:100
+        $this->maxLength($this->password, 'password');
     }
 }

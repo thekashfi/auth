@@ -1,5 +1,7 @@
 <?php
 
+require_once './app/Validators.php';
+require_once './app/DBConnection.php';
 require_once './app/User.php';
 require_once './app/DB.php';
 require_once './helpers.php';

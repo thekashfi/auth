@@ -5,10 +5,7 @@ use PDO;
 
 class DB
 {
-    private $host = 'localhost';
-    private $username = 'root';
-    private $password = '';
-    public $pdo;
+    use DBConnection;
 
     public function __construct()
     {
@@ -34,17 +31,8 @@ class DB
         $sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
         $pdo = (new self)->pdo;
         $stmt = $pdo->prepare($sql);
-        $stmt->execute($id);
+        $stmt->execute([$id]);
         return $stmt->fetchObject();
     }
 
-    public function connect()
-    {
-        try {
-            $this->pdo = new PDO("mysql:host=$this->host;dbname=auth", $this->username, $this->password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
-        }
-    }
 }

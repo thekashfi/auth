@@ -14,6 +14,7 @@ class User
 
         if (DB::createUser($name, $email, $password)) {
             // login him (make seesion and give the cookie)
+            die('logged in');
             $this->login();
         }
 
@@ -32,7 +33,7 @@ class User
         $this->login();
     }
 
-    public function validate()
+    public function validation()
     {
 
     }
@@ -40,10 +41,5 @@ class User
     public function find()
     {
         return DB::findUser($this->email, $this->password);
-    }
-
-    public function login()
-    {
-
     }
 }

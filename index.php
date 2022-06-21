@@ -1,5 +1,8 @@
 <?php
 
+include_once './app/User.php';
+include_once './app/DB.php';
+
 $request = str_replace('/auth', '', rtrim($_SERVER['REQUEST_URI'], '/'));
 
 switch ($request) {

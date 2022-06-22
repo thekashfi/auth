@@ -35,3 +35,13 @@ function guest() {
         return true;
     return false;
 }
+
+function flash($msg = false) {
+    if ($msg !== false) {
+        $_SESSION['flash'] = $msg;
+    } elseif (isset($_SESSION['flash'])) {
+        $msg = $_SESSION['flash'];
+        unset($_SESSION['flash']);
+        return $msg;
+    }
+}

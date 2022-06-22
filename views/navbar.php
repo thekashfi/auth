@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="top-breadcrumb">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb align-items-center">
                     <li class="mr-4"><a href="<?= url('') ?>" class=" text-dark"><i class="feather" data-feather="<?= $icon ?? 'arrow-left' ?>"></i></a></li>
                     <li class="mr-4"><a href="<?= url('') ?>" class=" text-dark">Contacts</a></li>
                     <li class="mr-4"><a href="<?= url('create') ?>" class=" text-dark"><i class="feather" data-feather="plus"></i></a></li>

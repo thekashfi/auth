@@ -2,6 +2,10 @@
 
 use App\Core;
 
+function conf($key) {
+    return (require(ROOT . '/app/config.php'))->{$key};
+}
+
 spl_autoload_register(function($class) {
     $class = basename($class); // trims namespace
     $dirs = [

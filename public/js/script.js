@@ -59,7 +59,7 @@ $(document).ready(() => {
     }
 
     async function fetch() {
-        return await $.get("https://www.randomuser.me/api/?seed=erfan&results=10" + page(), function(data, status){
+        return await $.get("http://localhost/auth/api/list" + page(), function(data, status){
             window.data = data.results
             write(window.data)
         });

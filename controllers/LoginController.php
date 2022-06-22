@@ -12,8 +12,12 @@ class LoginController
 
     public function index()
     {
+        $this->middleware();
+
         if (isset($_POST['login']))
             $this->login();
+
+
 
         return view('auth/login');
     }
@@ -43,5 +47,12 @@ class LoginController
         // password: max:100
         $this->required($this->password, 'password');
         $this->maxLength($this->password, 'password');
+    }
+
+    private function middleware()
+    {
+        if (isset($_SESSION['user'])) {
+            redirect('dashboard');
+        }
     }
 }

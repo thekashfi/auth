@@ -1,20 +1,7 @@
 <?php $this->layout('layout', ['title' => 'Show contact']) ?>
 
 <div class="container">
-    <!-- Navbar -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="top-breadcrumb">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="mr-4"><a href="index.html" class=" text-dark"><i class="feather" data-feather="arrow-left"></i></a></li>
-                        <li class="mr-4"><a href="index.html" class=" text-dark">Contacts</a></li>
-                        <li class="mr-4"><a href="create.html" class=" text-dark"><i class="feather" data-feather="plus"></i></a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    <?= $this->insert('navbar') ?>
 
     <div class="row">
         <div class="col-lg-12">

@@ -1,26 +1,7 @@
 <?php $this->layout('layout', ['title' => 'Contacts list']) ?>
 
 <div class="container">
-    <!-- Navbar -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="top-breadcrumb">
-                <div class="input-group rounded">
-                    <input type="search" id="search" oninput="search(this)" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <span class="input-group-text border-0" id="search-addon">
-                            <i class="fas fa-search"></i>
-                        </span>
-                </div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="mr-4"><a href="index.html" class=" text-dark"><i class="feather" data-feather="list"></i></a></li>
-                        <li class="mr-4"><a href="index.html" class=" text-dark">Contacts</a></li>
-                        <li class="mr-4"><a href="create.html" class=" text-dark"><i class="feather" data-feather="plus"></i></a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    <?= $this->insert('navbar', ['icon' => 'list']) ?>
 
     <div class="alert alert-success alert-dismissible fade show" style="display: none" id="delete_alert" role="alert">
         <strong>Contact</strong> has been deleted Successfully.

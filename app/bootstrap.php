@@ -2,6 +2,10 @@
 
 use App\Core;
 
+session_start();
+
+define('ROOT', __DIR__ . '/..');
+
 function conf($key) {
     $config = require(ROOT . '/app/config.php');
     return $config[$key];

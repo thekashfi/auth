@@ -11,7 +11,8 @@ class Core
 
     public function __construct()
     {
-        $url = explode('/', rtrim($_GET['url'], '/'));
+        $url = $_GET['url'] ?? '';
+        $url = explode('/', rtrim($url, '/'));
 
         $controller = ucfirst($url[0]) . 'Controller';
         if (file_exists(ROOT . '/controllers/' . $controller . '.php')) {

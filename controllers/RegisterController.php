@@ -6,12 +6,12 @@ use Models\User;
 
 class RegisterController
 {
-    use Validators;
+    use MiddlewaresTrait, Validators;
+
+    public $middleware = 'guestOnly';
 
     public function index()
     {
-        $this->middleware();
-
         if (isset($_POST['register']))
             $this->register();
 
@@ -47,12 +47,5 @@ class RegisterController
         // password: max:100
         $this->required($this->password, 'password');
         $this->maxLength($this->password, 'password');
-    }
-
-    private function middleware()
-    {
-        if (isset($_SESSION['user'])) {
-            redirect('dashboard');
-        }
     }
 }

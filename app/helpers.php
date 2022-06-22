@@ -23,3 +23,15 @@ function dd($input) {
     var_dump($input);
     exit;
 }
+
+function auth() {
+    if (isset($_SESSION['user']))
+        return true;
+    return false;
+}
+
+function guest() {
+    if (! isset($_SESSION['user']))
+        return true;
+    return false;
+}

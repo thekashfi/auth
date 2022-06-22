@@ -8,24 +8,18 @@ use Models\Contact;
 
 class ApiController
 {
+    use MiddlewaresTrait;
+
+    public $middleware = 'loggedIn';
+
     public function list()
     {
-        $this->middleware();
-
         $user_id = $_SESSION['user']->id;
         $contacts = (new Contact)->of($user_id);
         $contacts = $this->jsonFormat($contacts); // TODO: add pagination.
 
         header('Content-Type: application/json; charset=utf-8');
         echo $contacts;
-    }
-
-    private function middleware()
-    {
-        if (!isset($_SESSION['user'])) {
-            $href= url('/login');
-            die("please <a href='{$href}'>login</a> first. and then visit this page.");
-        }
     }
 
     private function jsonFormat($contacts)

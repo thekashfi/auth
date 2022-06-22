@@ -4,8 +4,9 @@ namespace Controllers;
 
 class FooController
 {
-    public function index($name)
+    public function index()
     {
-        echo 'i\'m index :)' . $name;
+        $name = 'ali';
+        return view('foo', ['name' => $name]);
     }
 }

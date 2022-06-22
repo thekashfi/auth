@@ -18,3 +18,8 @@ function redirect($path) {
     header('location: ' . URL . ltrim($path, '/'));
     exit;
 }
+
+function view($name, $data = []) {
+    $templates = new \League\Plates\Engine(ROOT . '/views');
+    echo $templates->render($name, $data);
+}

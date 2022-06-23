@@ -45,3 +45,9 @@ function flash($msg = false) {
         return $msg;
     }
 }
+
+class Contact2 {
+    public $id;
+    public $name;
+    public $user_id;
+}

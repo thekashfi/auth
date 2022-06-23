@@ -8,14 +8,15 @@ use Models\Contact;
 
 class ApiController
 {
-    use MiddlewaresTrait;
-
-    public $middleware = 'loggedIn';
-
     public function list()
     {
-        $user_id = $_SESSION['user']->id;
-        $contacts = (new Contact)->of($user_id);
+        if (auth()) {
+            $user_id = $_SESSION['user']->id;
+            $contacts = (new Contact)->of($user_id);
+        } else {
+            $contacts = (new Contact)->all();
+        }
+
         $contacts = $this->jsonFormat($contacts); // TODO: add pagination.
 
         header('Content-Type: application/json; charset=utf-8');
@@ -27,7 +28,7 @@ class ApiController
         foreach ($contacts as $c) {
             $array[] = [
                 'name' => [
-                    'title' => $c === 'male' ? 'Mr' : 'Ms',
+                    'title' => $c->gender === 'male' ? 'Mr' : 'Ms',
                     'first' => $c->first_name,
                     'last' => $c->last_name,
                 ],
@@ -39,11 +40,7 @@ class ApiController
                 ],
                 'id' => [
                     'value' => $c->id,
-                ],
-                'location' => [
-                    'country' => 'n/a',
-                    'city' => 'n/a',
-                ],
+                ]
             ];
         }
         return json_encode(['results' => $array]);

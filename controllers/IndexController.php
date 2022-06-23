@@ -12,7 +12,7 @@ class IndexController
     {
         if (guest()) {
             $href = url('login');
-            flash("to see only your contacts and add/edit/delete them. please <a href='{$href}'>login</a> to site.");
+            flash("please <a href='{$href}'>login</a> to site. <b>to see only your contacts</b> and be able to add/edit/delete them.");
         }
         return view('index');
     }

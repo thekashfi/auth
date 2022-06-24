@@ -12,6 +12,11 @@ class ContactsController
 
     public $middleware = 'loggedIn';
 
+    public function create()
+    {
+        return view('create');
+    }
+
     public function edit($contact_id)
     {
         $contact = (new Contact)->find($contact_id);
@@ -22,10 +27,14 @@ class ContactsController
         return view('edit', ['contact' => $contact]);
     }
 
+    public function store()
+    {
+        dd($_POST);
+    }
+
     public function update($contact_id)
     {
         $contact = (new Contact)->find($contact_id);
-        // dd(array_merge($_POST, ['user_id' => $_SESSION['user']->id]));
 
         $record['image'] = $contact->image;
 
@@ -36,7 +45,6 @@ class ContactsController
         }
 
         // TODO: validation all inputs
-
         $record['id'] = $contact->id;
         $record['first_name'] = $_POST['first_name'];
         $record['last_name'] = $_POST['last_name'];
@@ -51,9 +59,10 @@ class ContactsController
     private function replaceImage($oldImage)
     {
         $path = $_FILES['image']['tmp_name'];
-        $name = $_FILES['image']['name'];
+        // $name = $_FILES['image']['name'];
+        $name = $oldImage;
         $name = basename($name);
-        // $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         $dir = ROOT . '/public/images';
         $newPath = $dir . '/' . $name/* . '.' . $ext*/;
 

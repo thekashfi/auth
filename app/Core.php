@@ -20,6 +20,8 @@ class Core
         $this->url = $_GET['url'] ?? '';
         $this->url = explode('/', rtrim($this->url, '/'));
 
+        // TODO: implement 404 scenario.
+
         $this->controller = $this->determineController();
 
         $this->determineMethod();

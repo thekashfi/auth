@@ -9,8 +9,6 @@ class InstallController
 {
     public function index()
     {
-        $pdo = pdo();
-
         try {
             $sql = "CREATE TABLE IF NOT EXISTS users (
                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -36,7 +34,7 @@ class InstallController
                     ON DELETE CASCADE
                     ON UPDATE CASCADE
             );";
-            $pdo->exec($sql);
+            pdo()->exec($sql);
         } catch(PDOException $e) {
             echo 'couldn\'t create tables: ' . $e->getMessage();
         }
@@ -47,11 +45,9 @@ class InstallController
 
     public function seed()
     {
-        $pdo = pdo();
-
         $sql = "INSERT INTO users(name, email, password) VALUES ('admin', 'example@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
-        $pdo->exec($sql);
-        $id = $pdo->lastInsertId();
+        pdo()->exec($sql);
+        $id = pdo()->lastInsertId();
 
         $sql = "
         INSERT INTO
@@ -69,7 +65,7 @@ class InstallController
             ($id, 'Alisson', 'Cordova', '09171231234', 'example@gmail.com', 'female', '10.jpg');
         ";
 
-        if ($pdo->exec($sql) == 10) { // TODO: write self-remove method for this file.
+        if (pdo()->exec($sql) == 10) { // TODO: write self-remove method for this file.
             $href = url();
             die("seeded successfully. now you can delete InstallController. or go <a href='{$href}'>home</a>.");
         }

@@ -5,19 +5,19 @@ namespace Controllers;
 
 
 trait MiddlewaresTrait
-{
+{ // TODO: write documentation for my framework features like: middleware, routing, viewsTemplateEngine
     public function loggedIn()
     {
         if (guest()) {
             $href= url('/login');
-            die("please <a href='{$href}'>login</a> first. and then visit this page."); //TODO: implement flash instead of die out errors.
+            die("please <a href='{$href}'>login</a> first. and then visit this page.");
         }
     }
 
     public function guestOnly()
     {
         if (auth()) {
-            redirect('dashboard');
+            redirect('/');
         }
     }
 }

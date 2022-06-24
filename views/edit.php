@@ -54,38 +54,34 @@
 </div>
 
 <script>
-    // $("#editForm").submit(function(e) {
-    //     e.preventDefault();
-    //
-    //     // let form = $(this);
-    //     let form = new FormData(this);
-    //     // let url = form.attr('action');
-    //     let url = $(this).attr('action');
-    //
-    //     $.ajax({
-    //         type: "POST",
-    //         url: url,
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         data: form,
-    //         cache:false,
-    //         contentType: false,
-    //         processData: false,
-    //         success: function(data) {
-    //             console.log(data)
-    //             // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    //             // createdAt = new Date(JSON.parse(data).createdAt * 1000).toLocaleDateString("fa-IR", options)
-    //             //
-    //             // let Done = (createdAt) => `
-    //             //         <img src="images/tick.png" alt="tick" style="width: 30px" class="d-inline-block"/>
-    //             //         <p class="d-inline-block">بروزرسانی شد: ${createdAt}</p>
-    //             //     `;
-    //             // $("#update").replaceWith(Done(createdAt));
-    //         },
-    //         error: () => alert('Something went wrong!')
-    //     });
-    // });
+    $("#editForm").submit(function(e) {
+        e.preventDefault();
+
+        // let form = $(this);
+        let form = new FormData(this);
+        // let url = form.attr('action');
+        let url = $(this).attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data === 'updated') {
+                    let Done = () => `
+                            <p class="d-inline-block">Updated successfully</p>
+                            <img src="<?= asset('images/tick.png') ?>" alt="tick" style="width: 30px" class="d-inline-block"/>
+                            <p><a href="<?= url() ?>">back</a> to contacts?</p>
+                        `;
+                    $("#update").replaceWith(Done());
+                }
+            },
+            error: () => alert('Something went wrong!')
+        });
+    });
 </script>
 
 <script>

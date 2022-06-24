@@ -32,3 +32,6 @@ p{
     border-radius: 3px;
     background-color: #ffffff;
 }
+.breadcrumb {
+    background-color: #e4e7eb;
+}

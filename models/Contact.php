@@ -12,8 +12,7 @@ class Contact
     public function of($user_id)
     {
         $sql = "SELECT * FROM contacts WHERE user_id = ? ORDER BY updated_at DESC LIMIT 10";
-        $pdo = pdo();
-        $stmt = $pdo->prepare($sql);
+        $stmt = pdo()->prepare($sql);
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
@@ -26,8 +25,7 @@ class Contact
     public function all()
     {
         $sql = "SELECT * FROM contacts ORDER BY updated_at DESC LIMIT 10";
-        $pdo = pdo();
-        $stmt = $pdo->prepare($sql);
+        $stmt = pdo()->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
@@ -40,8 +38,7 @@ class Contact
                         users.email as uemail,
                         users.created_at as ucreated_at
                 FROM contacts INNER JOIN users ON contacts.user_id = users.id WHERE contacts.id = ? ORDER BY contacts.updated_at DESC, contacts.id DESC LIMIT 1";
-        $pdo = pdo();
-        $stmt = $pdo->prepare($sql);
+        $stmt = pdo()->prepare($sql);
         $stmt->execute([$id]);
         $row = $stmt->fetch(\PDO::FETCH_OBJ);
         if (! $row)
@@ -82,8 +79,7 @@ class Contact
                     image = :image,
                     updated_at = CURRENT_TIMESTAMP
                     WHERE id = :id";
-        $pdo = pdo();
-        $stmt = $pdo->prepare($sql);
+        $stmt = pdo()->prepare($sql);
         $stmt->execute([
             'id' => $contact['id'],
             'first_name' => $contact['first_name'],

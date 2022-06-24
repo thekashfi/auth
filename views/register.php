@@ -1,4 +1,4 @@
-<?php $this->layout('auth/layout', ['title' => 'Register']) ?>
+<?php $this->layout('layout', ['title' => 'Register']) ?>
 
 Register Form <br><br>
 <form action="" method="post">

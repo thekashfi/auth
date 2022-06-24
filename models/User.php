@@ -9,7 +9,7 @@ class User
     public function checkLogin($email, $password)
     {
         $sql = "SELECT * FROM users WHERE email = ? AND password = ? LIMIT 1";
-        $pdo = DB::pdo();
+        $pdo = pdo();
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$email, md5($password)]);
         return $stmt->fetchObject();
@@ -18,7 +18,7 @@ class User
     static function createUser($name, $email, $password)
     {
         $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        $pdo = DB::pdo();
+        $pdo = pdo();
         if ($pdo->prepare($sql)->execute([$name, $email, md5($password)]))
             return $pdo->lastInsertId();
         return false;
@@ -27,7 +27,7 @@ class User
     static function find($id)
     {
         $sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
-        $pdo = DB::pdo();
+        $pdo = pdo();
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetchObject(); // TODO: check if not found user by id. returns what?!

@@ -1,4 +1,4 @@
-<?php $this->layout('auth/layout', ['title' => 'Login']) ?>
+<?php $this->layout('layout', ['title' => 'Login']) ?>
 
 Login Form <br><br>
 <form action="" method="post">

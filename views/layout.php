@@ -13,6 +13,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.27.0/feather.min.js" integrity="sha256-xHkYry2yRjy99N8axsS5UL/xLHghksrFOGKm9HvFZIs=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <?= $this->section('content') ?>
+    <div class="container">
+        <?= $this->insert('navbar', ['icon' => 'list']) ?>
+
+        <?= $this->insert('flash', ['icon' => 'list']) ?>
+
+        <?= $this->section('content') ?>
+    </div>
 </body>
 </html>

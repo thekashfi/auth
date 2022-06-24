@@ -1,5 +1,7 @@
 <?php
 
+use Database\DB;
+
 function redirect($path) {
     header('location: ' . url() . ltrim($path, '/'));
     exit;
@@ -46,8 +48,12 @@ function flash($msg = false) {
     }
 }
 
-class Contact2 {
-    public $id;
-    public $name;
-    public $user_id;
+function pdo() {
+    return DB::pdo();
+}
+
+function flashBack($msg) {
+    flash($msg);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
 }

@@ -17,9 +17,7 @@ class LoginController
         if (isset($_POST['login']))
             $this->login();
 
-
-
-        return view('auth/login');
+        return view('login');
     }
 
     public function login()
@@ -34,7 +32,7 @@ class LoginController
             redirect('/');
         }
         else {
-            die('email or password is wrong!');
+            flashBack('email or password is wrong!');
         }
     }
 

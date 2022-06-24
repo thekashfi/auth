@@ -9,7 +9,7 @@ class InstallController
 {
     public function index()
     {
-        $pdo = DB::pdo();
+        $pdo = pdo();
 
         try {
             $sql = "CREATE TABLE IF NOT EXISTS users (
@@ -47,7 +47,7 @@ class InstallController
 
     public function seed()
     {
-        $pdo = DB::pdo();
+        $pdo = pdo();
 
         $sql = "INSERT INTO users(name, email, password) VALUES ('admin', 'example@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
         $pdo->exec($sql);
@@ -59,18 +59,19 @@ class InstallController
         VALUES
             ($id, 'Carl', 'Rosales', '09171231234', 'example@gmail.com', 'male', '1.jpg'),
             ($id, 'Areli', 'Wu', '09171231234', 'example@gmail.com', 'female', '2.jpg'),
-            ($id, 'Carl', 'Wilkinson', '09171231234', 'example@gmail.com', 'male', '3.jpg'),
+            ($id, 'Darsh', 'Wilkinson', '09171231234', 'example@gmail.com', 'male', '3.jpg'),
             ($id, 'Eliza', 'Kane', '09171231234', 'example@gmail.com', 'female', '4.jpg'),
-            ($id, 'Carl', 'Jarvis', '09171231234', 'example@gmail.com', 'male', '5.jpg'),
+            ($id, 'peter', 'Jarvis', '09171231234', 'example@gmail.com', 'male', '5.jpg'),
             ($id, 'Taliyah', 'Stewart', '09171231234', 'example@gmail.com', 'female', '6.jpg'),
-            ($id, 'Carl', 'Sims', '09171231234', 'example@gmail.com', 'male', '7.jpg'),
+            ($id, 'jack', 'Sims', '09171231234', 'example@gmail.com', 'male', '7.jpg'),
             ($id, 'Avah', 'Yates', '09171231234', 'example@gmail.com', 'female', '8.jpg'),
-            ($id, 'Carl', 'Arellano', '09171231234', 'example@gmail.com', 'male', '9.jpg'),
+            ($id, 'john', 'Arellano', '09171231234', 'example@gmail.com', 'male', '9.jpg'),
             ($id, 'Alisson', 'Cordova', '09171231234', 'example@gmail.com', 'female', '10.jpg');
         ";
 
         if ($pdo->exec($sql) == 10) { // TODO: write self-remove method for this file.
-            die('seeded successfully. now you can delete InstallController.');
+            $href = url();
+            die("seeded successfully. now you can delete InstallController. or go <a href='{$href}'>home</a>.");
         }
     }
 }

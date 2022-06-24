@@ -45,7 +45,7 @@ class ContactsController
         $record['gender'] = $_POST['gender'];
 
         (new Contact)->update($record);
-        echo 'success';
+        echo 'updated';
     }
 
     private function replaceImage($oldImage)
@@ -58,7 +58,7 @@ class ContactsController
         $newPath = $dir . '/' . $name/* . '.' . $ext*/;
 
         if (! copy($path, $newPath)) {
-            die('image upload problem :(');
+            flashBack('image upload problem :(');
         }
         unlink($path);
 

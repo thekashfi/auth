@@ -4,7 +4,7 @@ namespace Database;
 
 use PDO;
 
-class MySqlDB implements Foo
+class Connection implements Foo // TODO: here i was.
 {
     private static $obj;
     private $conn;

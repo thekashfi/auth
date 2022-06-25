@@ -103,6 +103,10 @@ class Contact
 
     public function delete($id)
     {
+        // db()->delete($id);
+        // function db() {
+        //     DBFactory()->getConnection('mysql')->delete();
+        // }
         $sql = "DELETE FROM contacts WHERE id = ?";
         if (pdo()->prepare($sql)->execute([$id])) {
             return true;

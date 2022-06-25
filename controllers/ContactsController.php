@@ -73,6 +73,18 @@ class ContactsController
         echo 'updated';
     }
 
+    public function delete($id)
+    {
+        // TODO: check if contact belong to user!
+        $contact = (new Contact)->find($id);
+        $image = $contact->image;
+        (new Contact)->delete($id); // TODO: repository pattern needed!
+
+        $this->deleteImage($image);
+
+        echo 'deleted';
+    }
+
     private function replaceImage($oldImage)
     {
         $path = $_FILES['image']['tmp_name'];
@@ -131,5 +143,14 @@ class ContactsController
         }
 
         return $name;
+    }
+
+    private function deleteImage($image)
+    {
+        $image = ROOT . "/public/images/$image";
+        if (file_exists($image)) {
+            unlink($image);
+            return true;
+        }
     }
 }

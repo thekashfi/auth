@@ -101,4 +101,14 @@ class Contact
         }
         return false;
     }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM contacts WHERE id = ?";
+        $pdo = pdo();
+        if ($pdo->prepare($sql)->execute([$id])) {
+            return true;
+        }
+        return false;
+    }
 }

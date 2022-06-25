@@ -5,7 +5,7 @@
     <script>
         /* Card template in JQuery*/
         const Item = (result) => `
-            <div class="col-lg-6">
+            <div class="col-lg-6" id="contact-${result.id.value}">
                 <div class="card m-b-30">
                     <div class="card-body py-5">
                         <div class="row">
@@ -25,7 +25,7 @@
                                                 delete_form('${result.id.value}');
                                             }
                                         "><i class="feather" data-feather="trash-2"></i></button>
-                                    <form action="" method="post" id="delete_form_${result.id.value}" class="delete_form" data="${result.id.value}" hidden></form>
+                                    <form action="<?= url('contacts/delete') ?>/${result.id.value}" method="post" id="delete_form_${result.id.value}" class="delete_form" data="${result.id.value}" hidden></form>
                                     <?php endif ?>
                                 </div>
                                 <div class="table-responsive">
@@ -65,16 +65,15 @@
 
 <script>
     function delete_form (id) {
-        let url = 'https://webhook.site/14e51441-12f1-4efa-8bfc-5334838e1bc2?id=' + id;
+        let url = '<?= url('contacts/delete') ?>/' + id;
 
         $.ajax({
             type: "DELETE",
             url: url,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
             success: function(data) {
-                $('#delete_alert').fadeIn()
+                if (data === 'deleted') {
+                    $(`#contact-${id}`).fadeOut('slow')
+                }
             },
             error: () => alert('Something went wrong!')
         });

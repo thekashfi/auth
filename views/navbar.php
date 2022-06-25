@@ -16,7 +16,7 @@
                         <li class="ml-auto"><a href="<?= url('login') ?>" class=" text-dark">  Login |</a></li>
                         <li class=""><a href="<?= url('register') ?>" class=" text-dark">  Register  </a></li>
                     <?php else: ?> <!-- TODO: make profile page for user containing his stats -->
-                        <li class="ml-auto"><i class="feather mr-1" data-feather="user"></i><?= $_SESSION['user']->name ?> |</li>
+                        <li class="ml-auto"><i class="feather mr-1" data-feather="user"></i><?= user()->name ?> |</li>
                         <span>  </span><li class=""><a href="<?= url('logout') ?>" class=" text-dark">Logout<i class="feather ml-1" data-feather="log-out"></i></a></li>
                     <?php endif ?>
                 </ol>

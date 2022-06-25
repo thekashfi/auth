@@ -90,4 +90,15 @@ class Contact
             'image' => $contact['image'],
         ]);
     }
+
+    public function create($contact)
+    {
+        $sql = "INSERT INTO contacts (user_id, first_name, last_name, phone, email, gender, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // TODO: repository pattern: everytime i say pdo(). give me back that existing connection. don't create new one.
+        $pdo = pdo();
+        if ($pdo->prepare($sql)->execute(array_values($contact))) {
+            return $pdo->lastInsertId();
+        }
+        return false;
+    }
 }

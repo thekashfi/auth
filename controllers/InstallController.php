@@ -48,7 +48,7 @@ class InstallController
         $sql = "INSERT INTO users(name, email, password) VALUES ('admin', 'example@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
         $pdo = pdo();
         $pdo->exec($sql);
-        $id = $pdo->lastInsertId();
+        $id = $pdo->lastInsertId(); // create another user with some contacts to test acl
 
         $sql = "
         INSERT INTO

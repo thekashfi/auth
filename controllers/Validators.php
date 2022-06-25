@@ -4,7 +4,6 @@ namespace Controllers;
 
 trait Validators
 {
-
     public function email($item)
     {
         if (!filter_var($item, FILTER_VALIDATE_EMAIL))
@@ -15,11 +14,11 @@ trait Validators
     public function maxLength($item, $name)
     {
         if (strlen(trim($item)) > 100)
-            return flashBack("$name shouldn\'t be more than 100 characters");
+            return flashBack("$name shouldn't be more than 100 characters");
         return true;
     }
 
-    public function required($item, $name)
+    public function required($item, $name = null)
     {
         if (empty(trim($item)))
             return flashBack("the $name field can't be empty!");

@@ -11,7 +11,7 @@ class ApiController
     public function list()
     {
         if (auth()) {
-            $user_id = $_SESSION['user']->id;
+            $user_id = user()->id;
             $contacts = (new Contact)->of($user_id);
         } else {
             $contacts = (new Contact)->all();

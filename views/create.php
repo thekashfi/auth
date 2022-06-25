@@ -4,14 +4,14 @@
     <!-- Start col -->
     <div class="col-lg-12">
         <div class="card m-b-30">
-            <form action="<?= url('contacts/store') ?>" method="post" id="createForm">
+            <form action="<?= url('contacts/store') ?>" method="post" id="createForm" enctype="multipart/form-data">
                 <div class="card-body py-5">
                     <div class="row">
                         <div class="col-lg-3 text-center">
                             <label for="avatar">
                                 <img src="<?= asset('images/default.jpg') ?>" class="img-fluid mb-3" alt="user" />
                             </label>
-                            <input type="file" class="form-control-file" id="avatar">
+                            <input type="file" name="image" class="form-control-file" id="avatar">
                         </div>
                         <div class="col-lg-9">
                             <form action="">
@@ -59,22 +59,24 @@
     //$("#createForm").submit(function(e) {
     //    e.preventDefault();
     //
-    //    let form = $(this);
-    //    let url = form.attr('action');
+    //    let form = new FormData(this);
+    //    let url = $(this).attr('action');
     //
     //    $.ajax({
     //        type: "POST",
     //        url: url,
-    //        headers: {
-    //            'Content-Type': 'application/x-www-form-urlencoded'
-    //        },
-    //        data: form.serialize(),
+    //        data: form,
+    //        cache:false,
+    //        contentType: false,
+    //        processData: false,
     //        success: function(data) {
-    //            let Done = () => `
+    //            if (data === 'created') {
+    //                let Done = () => `
     //                    <img src="<?//= asset('images/tick.png') ?>//" alt="tick" style="width: 30px" class="d-inline-block"/>
     //                    <p class="d-inline-block">ثبت شد</p>
     //                `;
-    //            $("#create").replaceWith(Done());
+    //                $("#create").replaceWith(Done());
+    //            }
     //        },
     //        error: () => alert('Something went wrong!')
     //    });

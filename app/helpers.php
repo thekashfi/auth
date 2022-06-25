@@ -38,6 +38,10 @@ function guest() {
     return false;
 }
 
+function user() {
+    return $_SESSION['user'];
+}
+
 function flash($msg = false) {
     if ($msg !== false) {
         $_SESSION['flash'] = $msg;

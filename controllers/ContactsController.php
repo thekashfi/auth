@@ -39,8 +39,8 @@ class ContactsController
     public function edit($contact_id)
     {
         $contact = (new Contact)->find($contact_id);
-        if (($user_id = user()->id) !== $contact->user->id) {
-            die('OO oo! you can\'t edit this contact. go edit your contacts :/');
+        if (user()->id !== $contact->user->id) {
+            die("OO oo! you can\'t edit this contact. go edit your contacts :|");
         }
 
         return view('edit', ['contact' => $contact]);
@@ -48,10 +48,15 @@ class ContactsController
 
     public function update($contact_id)
     {
-        // TODO: check user's id with contact's user_id
-        // TODO: json validation!
+        // TODO: validation all inputs
+        // TODO: json error return validation!
 
         $contact = (new Contact)->find($contact_id);
+
+        if (user()->id !== $contact->user->id) {
+            header('HTTP/1.1 403 Forbidden');
+            die("OO oo! you can\'t edit this contact. go edit your contacts :|");
+        }
 
         $record['image'] = $contact->image;
 
@@ -61,7 +66,6 @@ class ContactsController
                 $record['image'] = $this->replaceImage($contact->image);
         }
 
-        // TODO: validation all inputs
         $record['id'] = $contact->id;
         $record['first_name'] = $_POST['first_name'];
         $record['last_name'] = $_POST['last_name'];
@@ -75,8 +79,13 @@ class ContactsController
 
     public function delete($id)
     {
-        // TODO: check if contact belong to user!
         $contact = (new Contact)->find($id);
+
+        if (user()->id !== $contact->user->id) {
+            header('HTTP/1.1 403 Forbidden');
+            die("OO oo! you can\'t delete this contact. go delete your contacts :|");
+        }
+
         $image = $contact->image;
         (new Contact)->delete($id); // TODO: repository pattern needed!
 
@@ -105,7 +114,7 @@ class ContactsController
         return $name;
     }
 
-    public function hasFile($name)
+    private function hasFile($name)
     {
         return (isset($_FILES) && ! empty($_FILES[$name]['tmp_name']));
     }

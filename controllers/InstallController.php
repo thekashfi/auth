@@ -39,16 +39,10 @@ class InstallController
             echo 'couldn\'t create tables: ' . $e->getMessage();
         }
 
-        $href = url('install/seed');
-        echo "tables has been created successfully. do you want also <a href='{$href}'>seed some fake data</a>?";
-    }
-
-    public function seed()
-    {
         $sql = "INSERT INTO users(name, email, password) VALUES ('admin', 'example@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
         $pdo = pdo();
         $pdo->exec($sql);
-        $id = $pdo->lastInsertId(); // create another user with some contacts to test acl
+        $id = $pdo->lastInsertId();
 
         $sql = "
         INSERT INTO
@@ -66,9 +60,26 @@ class InstallController
             ($id, 'Alisson', 'Cordova', '09171231234', 'example@gmail.com', 'female', '10.jpg');
         ";
 
-        if ($pdo->exec($sql) == 10) { // TODO: write self-remove method for this file.
+        if ($pdo->exec($sql) !== 10)
+            die('problem');
+        sleep(1);
+
+        $sql = "INSERT INTO users(name, email, password) VALUES ('user2', 'example@email.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
+        $pdo = pdo();
+        $pdo->exec($sql);
+        $id = $pdo->lastInsertId();
+
+        $sql = "
+        INSERT INTO
+	        contacts(user_id, first_name, last_name, phone, email, gender, image)
+        VALUES
+            ($id, 'The', 'Rock', '09171231234', 'example@gmail.com', 'male', '11.jpg'),
+            ($id, 'John', 'Doe', '09171231234', 'example@gmail.com', 'male', '12.jpg');
+        ";
+
+        if ($pdo->exec($sql) == 2) {
             $href = url();
-            die("seeded successfully. now you can delete InstallController. or go <a href='{$href}'>home</a>.");
+            die("<b>Successfully</b> created tables and seeded some dummy data. now you can go to <a href='{$href}'>home page</a>.");
         }
     }
 }

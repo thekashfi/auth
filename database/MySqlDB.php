@@ -4,28 +4,28 @@ namespace Database;
 
 use PDO;
 
-class DB
+class MySqlDB implements Foo
 {
     private static $obj;
-    private $pdo;
+    private $conn;
 
     private final function __construct()
     {
-        $this->pdo = $this->connect();
+        $this->conn = $this->connect();
     }
 
     public static function getInstance()
     {
         if (! isset(self::$obj)) {
-            self::$obj = new DB;
+            self::$obj = new MySqlDB;
         }
         return self::$obj;
     }
 
-    public function pdo()
+    public function connection()
     {
-        if (isset($this->pdo)) {
-            return $this->pdo;
+        if (isset($this->conn)) {
+            return $this->conn;
         }
         return null;
     }
@@ -33,11 +33,11 @@ class DB
     private function connect()
     {
         try {
-            $pdo = new PDO('mysql:host=' . conf('host') . ';dbname=' . conf('database'), conf('username'), conf('password'));
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = new PDO('mysql:host=' . conf('host') . ';dbname=' . conf('database'), conf('username'), conf('password'));
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
-        return $pdo;
+        return $conn;
     }
 }

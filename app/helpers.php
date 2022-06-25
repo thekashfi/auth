@@ -1,5 +1,6 @@
 <?php
 
+use Database\DatabaseFactory;
 use Database\DB;
 
 function redirect($path) {
@@ -53,8 +54,11 @@ function flash($msg = false) {
 }
 
 function pdo() {
-    $db = DB::getInstance();
-    return $db->pdo();
+    return DatabaseFactory::getConnection('mysql');
+}
+
+function json() {
+    return DatabaseFactory::getConnection('json');
 }
 
 function flashBack($msg) {

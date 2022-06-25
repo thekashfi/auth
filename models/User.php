@@ -17,9 +17,8 @@ class User
     static function createUser($name, $email, $password)
     {
         $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        $pdo = pdo();
-        if ($pdo->prepare($sql)->execute([$name, $email, md5($password)]))
-            return $pdo->lastInsertId();
+        if (pdo()->prepare($sql)->execute([$name, $email, md5($password)]))
+            return pdo()->lastInsertId();
         return false;
     }
 

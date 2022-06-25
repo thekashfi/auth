@@ -53,7 +53,8 @@ function flash($msg = false) {
 }
 
 function pdo() {
-    return DB::pdo();
+    $db = DB::getInstance();
+    return $db->pdo();
 }
 
 function flashBack($msg) {

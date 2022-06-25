@@ -40,9 +40,8 @@ class InstallController
         }
 
         $sql = "INSERT INTO users(name, email, password) VALUES ('admin', 'example@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
-        $pdo = pdo();
-        $pdo->exec($sql);
-        $id = $pdo->lastInsertId();
+        pdo()->exec($sql);
+        $id = pdo()->lastInsertId();
 
         $sql = "
         INSERT INTO
@@ -60,14 +59,13 @@ class InstallController
             ($id, 'Alisson', 'Cordova', '09171231234', 'example@gmail.com', 'female', '10.jpg');
         ";
 
-        if ($pdo->exec($sql) !== 10)
+        if (pdo()->exec($sql) !== 10)
             die('problem');
         sleep(1);
 
         $sql = "INSERT INTO users(name, email, password) VALUES ('user2', 'example@email.com', '81dc9bdb52d04dc20036dbd8313ed055')"; // 1234
-        $pdo = pdo();
-        $pdo->exec($sql);
-        $id = $pdo->lastInsertId();
+        pdo()->exec($sql);
+        $id = pdo()->lastInsertId();
 
         $sql = "
         INSERT INTO
@@ -77,7 +75,7 @@ class InstallController
             ($id, 'John', 'Doe', '09171231234', 'example@gmail.com', 'male', '12.jpg');
         ";
 
-        if ($pdo->exec($sql) == 2) {
+        if (pdo()->exec($sql) == 2) {
             $href = url();
             die("<b>Successfully</b> created tables and seeded some dummy data. now you can go to <a href='{$href}'>home page</a>.");
         }

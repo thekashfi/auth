@@ -6,26 +6,38 @@ use PDO;
 
 class DB
 {
-    public $pdo;
+    private static $obj;
+    private $pdo;
 
-    public function __construct()
+    private final function __construct()
     {
-        $this->connect();
+        $this->pdo = $this->connect();
     }
 
-    public function connect()
+    public static function getInstance()
+    {
+        if (! isset(self::$obj)) {
+            self::$obj = new DB;
+        }
+        return self::$obj;
+    }
+
+    public function pdo()
+    {
+        if (isset($this->pdo)) {
+            return $this->pdo;
+        }
+        return null;
+    }
+
+    private function connect()
     {
         try {
-            $this->pdo = new PDO('mysql:host=' . conf('host') . ';dbname=' . conf('database'), conf('username'), conf('password'));
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo = new PDO('mysql:host=' . conf('host') . ';dbname=' . conf('database'), conf('username'), conf('password'));
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
+        return $pdo;
     }
-
-    public static function pdo()
-    {
-        return (new self)->pdo;
-    }
-
 }

@@ -8,28 +8,28 @@ trait Validators
     public function email($item)
     {
         if (!filter_var($item, FILTER_VALIDATE_EMAIL))
-            flashBack('invalid email format');
+            return flashBack('invalid email format');
         return true;
     }
 
     public function maxLength($item, $name)
     {
         if (strlen(trim($item)) > 100)
-            flashBack("$name shouldn\'t be more than 100 characters");
+            return flashBack("$name shouldn\'t be more than 100 characters");
         return true;
     }
 
     public function required($item, $name)
     {
         if (empty(trim($item)))
-            flashBack("the $name field can't be empty!");
+            return flashBack("the $name field can't be empty!");
         return true;
     }
 
     public function requiredFile($name)
     {
         if (! isset($_FILES) ||  empty($_FILES[$name]['tmp_name'])) {
-            flashBack("$name file is required");
+            return flashBack("$name file is required");
         }
         return true;
     }
@@ -45,7 +45,7 @@ trait Validators
         $fileType = finfo_file($fileInfo, $_FILES[$name]['tmp_name']);
 
         if (!in_array($fileType, array_keys($allowedTypes)))
-            flashBack("$name file must be an image (allowed: jpeg/png)");
+            return flashBack("$name file must be an image (allowed: jpeg/png)");
         return true;
     }
 
@@ -54,7 +54,7 @@ trait Validators
         $file = $_FILES[$name]['tmp_name'];
         $size = filesize($file);
         if ($size > $maxSize*1024*1024)
-            flashBack("$name file can't be more than {$maxSize}MB");
+            return flashBack("$name file can't be more than {$maxSize}MB");
         return true;
     }
 }

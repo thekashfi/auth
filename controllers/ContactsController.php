@@ -34,6 +34,8 @@ class ContactsController
 
     public function update($contact_id)
     {
+        // TODO: check user's id with contact's user_id
+
         $contact = (new Contact)->find($contact_id);
 
         $record['image'] = $contact->image;
@@ -59,21 +61,20 @@ class ContactsController
     private function replaceImage($oldImage)
     {
         $path = $_FILES['image']['tmp_name'];
-        // $name = $_FILES['image']['name'];
         $name = $oldImage;
-        $name = basename($name);
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         $dir = ROOT . '/public/images';
-        $newPath = $dir . '/' . $name/* . '.' . $ext*/;
-
-        if (! copy($path, $newPath)) {
-            flashBack('image upload problem :(');
-        }
-        unlink($path);
+        $newPath = $dir . '/' . $name/* . '.' . $ext*/; // TODO: get uploaded image's extension.
 
         if (file_exists($oldImage = $dir . '/' . $oldImage)) {
             unlink($oldImage);
         }
+
+        if (! copy($path, $newPath)) {
+            die('problem');
+        }
+        unlink($path);
+
         return $name;
     }
 

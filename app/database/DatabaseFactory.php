@@ -11,13 +11,11 @@ class DatabaseFactory
         switch ($type) {
             default:
             case 'mysql':
-                $db = Connection::getInstance();
-                $conn = $db->connection();
+                return new MySql\MySql;
                 break;
             case 'json':
                 $conn = new jsonconn();
                 break;
         }
-        return $conn;
     }
 }

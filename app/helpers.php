@@ -53,13 +53,17 @@ function flash($msg = false) {
     }
 }
 
-function pdo() {
-    return DatabaseFactory::getConnection('mysql');
+function db() {
+    return DatabaseFactory::getConnection(conf('driver'));
 }
 
-function json() {
-    return DatabaseFactory::getConnection('json');
+function pdo() {
+    return DatabaseFactory::getConnection(conf('driver'));
 }
+
+//function json() {
+//    return DatabaseFactory::getConnection('json');
+//}
 
 function flashBack($msg) {
     flash($msg);

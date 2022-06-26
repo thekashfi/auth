@@ -4,7 +4,7 @@ namespace App\Database\MySql;
 
 use PDO;
 
-class Connection // TODO: here i was.
+class Connection
 {
     private static $obj;
     private $conn;
@@ -17,7 +17,7 @@ class Connection // TODO: here i was.
     public static function getInstance()
     {
         if (! isset(self::$obj)) {
-            self::$obj = new MySqlDB;
+            self::$obj = new Connection;
         }
         return self::$obj;
     }

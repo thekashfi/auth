@@ -66,14 +66,14 @@ class ContactsController
                 $record['image'] = $this->replaceImage($contact->image);
         }
 
-        $record['id'] = $contact->id;
+        $id = $contact->id;
         $record['first_name'] = $_POST['first_name'];
         $record['last_name'] = $_POST['last_name'];
         $record['phone'] = $_POST['phone'];
         $record['email'] = $_POST['email'];
         $record['gender'] = $_POST['gender'];
 
-        (new Contact)->update($record);
+        (new Contact)->update(['id', '=', $id], $record);
         echo 'updated';
     }
 

@@ -27,7 +27,7 @@ class LoginController
 
         $this->validation();
 
-        if ($user = (new User)->checkLogin($this->email, $this->password)) {
+        if ($user = (new User)->checkLogin($this->email, md5($this->password))) {
             $_SESSION['user'] = $user;
             redirect('/');
         }

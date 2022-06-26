@@ -1,10 +1,10 @@
 <?php
 
-namespace Database;
+namespace App\Database\MySql;
 
 use PDO;
 
-class Connection implements Foo // TODO: here i was.
+class Connection // TODO: here i was.
 {
     private static $obj;
     private $conn;

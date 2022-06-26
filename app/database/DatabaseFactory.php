@@ -1,6 +1,8 @@
 <?php
 
-namespace Database;
+namespace App\Database;
+
+use App\Database\MySql\Connection;
 
 class DatabaseFactory
 {
@@ -9,7 +11,7 @@ class DatabaseFactory
         switch ($type) {
             default:
             case 'mysql':
-                $db = MySqlDB::getInstance();
+                $db = Connection::getInstance();
                 $conn = $db->connection();
                 break;
             case 'json':

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Controllers;
+namespace App\Controllers;
 
 
-use Models\User;
+use App\Models\User;
 
 class LoginController
 {

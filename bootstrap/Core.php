@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace Bootstrap;
 
 
-use Controllers\MiddlewaresTrait;
+use App\Controllers\MiddlewaresTrait;
 
 class Core
 {
@@ -32,11 +32,11 @@ class Core
     private function determineController() // TODO: change all methods and properties access level to minimum possible level.
     {
         $controller = ucfirst($this->url[0]) . 'Controller';
-        if (file_exists(ROOT . '/controllers/' . $controller . '.php')) {
+        if (file_exists(ROOT . '/app/controllers/' . $controller . '.php')) {
             $this->controller = $controller;
         }
 
-        $controller = "Controllers\\{$this->controller}";
+        $controller = "App\\Controllers\\{$this->controller}";
         return new $controller;
     }
 

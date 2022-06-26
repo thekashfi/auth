@@ -1,8 +1,8 @@
 <?php
 
-namespace Models;
+namespace App\Models;
 
-use Database\DB;
+use App\Database\DB;
 
 class User
 {

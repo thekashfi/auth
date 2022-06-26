@@ -1,7 +1,7 @@
 <?php
 
-use Database\DatabaseFactory;
-use Database\DB;
+use App\Database\DatabaseFactory;
+use App\Database\DB;
 
 function redirect($path) {
     header('location: ' . url() . ltrim($path, '/'));
@@ -9,7 +9,7 @@ function redirect($path) {
 }
 
 function view($name, $data = []) {
-    $templates = new \League\Plates\Engine(ROOT . '/views');
+    $templates = new \League\Plates\Engine(ROOT . '/app/views');
     echo $templates->render($name, $data);
 }
 

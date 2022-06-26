@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Controllers;
+namespace App\Controllers;
 
 
-use Models\Contact;
+use App\Models\Contact;
 
 class ContactsController
 {

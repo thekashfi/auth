@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Database\DB;
+use App\Database\DB;
 
 class InstallController
 {

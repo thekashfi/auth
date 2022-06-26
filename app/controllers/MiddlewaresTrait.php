@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Controllers;
+namespace App\Controllers;
 
 
 trait MiddlewaresTrait

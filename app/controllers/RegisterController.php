@@ -1,8 +1,8 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Models\User;
+use App\Models\User;
 
 class RegisterController
 {
@@ -10,6 +10,10 @@ class RegisterController
 
     public $middleware = 'guestOnly';
 
+    public function __construct()
+    {
+        die('here');
+}
     public function index()
     {
         if (isset($_POST['register']))

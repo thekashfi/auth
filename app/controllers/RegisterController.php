@@ -10,16 +10,12 @@ class RegisterController
 
     public $middleware = 'guestOnly';
 
-    public function __construct()
-    {
-        die('here');
-}
     public function index()
     {
         if (isset($_POST['register']))
             $this->register();
 
-        return view('auth/register');
+        return view('register');
     }
 
     public function register()

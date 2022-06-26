@@ -4,7 +4,7 @@ return [
     'url' => 'http://localhost/auth',
 
     // DATABASE
-    'driver' => 'mysql',
+    'driver' => 'json',
 
     'host' => 'localhost',
     'database' => 'auth',

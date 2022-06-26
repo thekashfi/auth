@@ -53,13 +53,13 @@ function flash($msg = false) {
     }
 }
 
-function db() {
-    return DatabaseFactory::getConnection(conf('driver'));
+function db($driver = null) {
+    return DatabaseFactory::getConnection($driver ?: conf('driver'));
 }
 
-function pdo() {
-    return DatabaseFactory::getConnection(conf('driver'));
-}
+//function pdo() {
+//    return DatabaseFactory::getConnection('mysql');
+//}
 
 //function json() {
 //    return DatabaseFactory::getConnection('json');

@@ -12,10 +12,8 @@ class DatabaseFactory
             default:
             case 'mysql':
                 return new MySql\MySql;
-                break;
             case 'json':
-                $conn = new jsonconn();
-                break;
+                return new Json\Json;
         }
     }
 }

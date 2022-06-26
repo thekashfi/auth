@@ -5,5 +5,8 @@
             "Bootstrap\\": "bootstrap",
             "League\\Plates\\": "libs/plates"
         }
+    },
+    "require": {
+        "jajo/jsondb": "^3.0"
     }
 }

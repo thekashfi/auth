@@ -41,6 +41,6 @@ class Contact
 
     public function of($user_id)
     {
-        return db()->contactOf($user_id);
+        return db()->contactsOf($user_id);
     }
 }

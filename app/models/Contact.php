@@ -41,6 +41,6 @@ class Contact
 
     public function of($user_id)
     {
-        return db()->contactsOf($user_id);
+        return db()->contactsOf($user_id, ['updated_at', 'desc']); // TODO: ordering this for json also
     }
 }

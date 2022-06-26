@@ -57,13 +57,13 @@ function db($driver = null) {
     return DatabaseFactory::getConnection($driver ?: conf('driver'));
 }
 
-//function pdo() {
-//    return DatabaseFactory::getConnection('mysql');
-//}
+function pdo() {
+    return DatabaseFactory::getConnection('mysql')->conn();
+}
 
-//function json() {
-//    return DatabaseFactory::getConnection('json');
-//}
+function json() {
+    return DatabaseFactory::getConnection('json')->conn();
+}
 
 function flashBack($msg) {
     flash($msg);

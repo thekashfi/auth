@@ -39,7 +39,7 @@ class ContactsController
     public function edit($contact_id)
     {
         $contact = (new Contact)->find($contact_id);
-        if (user()->id !== $contact->user->id) {
+        if ((int) user()->id !== (int) $contact->user->id) {
             die("OO oo! you can\'t edit this contact. go edit your contacts :|");
         }
 
@@ -53,7 +53,7 @@ class ContactsController
 
         $contact = (new Contact)->find($contact_id);
 
-        if (user()->id !== $contact->user->id) {
+        if ((int) user()->id !== (int) $contact->user->id) {
             header('HTTP/1.1 403 Forbidden');
             die("OO oo! you can\'t edit this contact. go edit your contacts :|");
         }
@@ -81,7 +81,7 @@ class ContactsController
     {
         $contact = (new Contact)->find($id);
 
-        if (user()->id !== $contact->user->id) {
+        if ((int) user()->id !== (int) $contact->user->id) {
             header('HTTP/1.1 403 Forbidden');
             die("OO oo! you can\'t delete this contact. go delete your contacts :|");
         }

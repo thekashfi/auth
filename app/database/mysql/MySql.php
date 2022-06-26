@@ -3,6 +3,7 @@
 namespace App\Database\MySql;
 
 use App\Database\DriverInterface;
+use App\Database\FormatRelations;
 
 class MySql implements DriverInterface
 {
@@ -81,16 +82,19 @@ class MySql implements DriverInterface
         $stmt->execute([$email, $password]);
         return $stmt->fetchObject();
     }
-
-
-    public function contactsOf($user_id)
+    
+    public function contactsOf($user_id, $order = ['id', 'ASC'])
     {
+        if (is_string($order)) {
+            $order = [$order, "ASC"];
+        }
+
         $sql = "SELECT users.*,
                         contacts.*,
                         users.id as uid,
                         users.email as uemail,
                         users.created_at as ucreated_at
-                FROM contacts INNER JOIN users ON contacts.user_id = users.id WHERE user_id = ? ORDER BY updated_at DESC";
+                FROM contacts INNER JOIN users ON contacts.user_id = users.id WHERE user_id = ?  ORDER BY contacts.{$order[0]} {$order[1]}, contacts.id ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$user_id]);
         $rows = $stmt->fetchAll(\PDO::FETCH_OBJ);
@@ -111,5 +115,10 @@ class MySql implements DriverInterface
         if (! $row)
             return false;
         return $this->arrangeContacts($row);
+    }
+
+    public function conn()
+    {
+        return $this->pdo;
     }
 }

@@ -12,4 +12,5 @@ interface DriverInterface
     public function findByEmailPass($email, $password);
     public function contactsOf($user_id);
     public function findContact($id);
+    public function conn();
 }

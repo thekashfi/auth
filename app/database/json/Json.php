@@ -14,18 +14,20 @@ class Json implements DriverInterface
 
     public function __construct()
     {
-        $this->json = new JSONDB(__DIR__ . '/jsons');
+        $this->json = new JSONDB(ROOT . '/app/database/json/jsons');
         $this->id = ['id' => rand(1, 1000)];
     }
 
-    public function all($table, $order = ['id', 'ASC']) // TODO: implement ordering.
+    public function all($table, $order = ['id', 'ASC'])
     {
         if (is_string($order)) {
             $order = [$order, "ASC"];
         }
+        $order[1] = strtoupper($order[1]) === 'ASC' ? JSONDB::ASC : JSONDB::DESC;
 
         $users = $this->json->select('*')
             ->from("{$table}.json")
+            ->order_by($order[0], $order[1])
             ->get();
         return $this->format($users ?? false);
     }
@@ -45,11 +47,12 @@ class Json implements DriverInterface
         $this->json->insert("{$table}.json",
             array_merge($this->id, $values, $timestamps)
         );
-        return $this->id;
+        return $this->id['id'];
     }
 
-    public function update($table, $where, $values) // TODO: timestamp here...!
+    public function update($table, $where, $values)
     {
+        $values = array_merge($values, ['updated_at' => time()]);
         $this->json->update($values)
             ->from("{$table}.json")
             ->where([$where[0] => $where[2]])
@@ -74,11 +77,17 @@ class Json implements DriverInterface
         return $this->format($user[0] ?? false);
     }
 
-    public function contactsOf($user_id) // TODO: fix code duplication in these two method.
+    public function contactsOf($user_id, $order = ['id', 'ASC']) // TODO: fix code duplication in these two method. (ask)
     {
+        if (is_string($order)) {
+            $order = [$order, "ASC"];
+        }
+        $order[1] = strtoupper($order[1]) === 'ASC' ? JSONDB::ASC : JSONDB::DESC;
+
         $contacts = $this->json->select('*')
             ->from("contacts.json")
             ->where(['user_id' => $user_id])
+            ->order_by($order[0], $order[1])
             ->get();
 
         if (! $contacts)
@@ -134,8 +143,14 @@ class Json implements DriverInterface
         return $this->arrangeContacts($this->format(array_merge($contact, $u)));
     }
 
+    public function conn()
+    {
+        return new JSONDB(ROOT . '/app/database/json/jsons');
+    }
+
     private function format($users)
     {
         return json_decode(json_encode($users));
     }
+
 }

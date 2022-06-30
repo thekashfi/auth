@@ -77,6 +77,11 @@
                             <p><a href="<?= url() ?>">back</a> to contacts?</p>
                         `;
                     $("#update").replaceWith(Done());
+                } else {
+                    let json = JSON.parse(data)
+                    if (json.hasOwnProperty('msg')) {
+                        window.flash(json.msg);
+                    }
                 }
             },
             error: () => alert('Something went wrong!')

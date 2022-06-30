@@ -28,7 +28,7 @@ class RegisterController
 
         if ($id = (new User)->createUser($this->name, $this->email, md5($this->password))) {
             // TODO: check if user doesn't exists already! (email)
-            // TODO: better implementation for User class. it keeps creating new object! maybe use repository pattern.
+            // TODO: better implementation for User class. it keeps creating new object! Facade and singleton pattern needed!
             $user = (new User)->find($id);
             $_SESSION['user'] = $user;
             redirect('/');

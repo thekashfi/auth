@@ -64,6 +64,14 @@
 </div>
 
 <script>
+    $(document).ready(() =>
+        window.fetch()
+            .then(() => {
+                feather.replace()
+                $('#spinner').hide()
+                $('#pagination').show()
+            }))
+
     function delete_form (id) {
         let url = '<?= url('contacts/delete') ?>/' + id;
 

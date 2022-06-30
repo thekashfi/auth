@@ -26,7 +26,7 @@ class Contact
 
     public function create($contact)
     {
-        return db()->insert('contacts', $contact); //TODO: duplicate use case :D
+        return db()->insert('contacts', $contact);
     }
 
     public function delete($id)
@@ -41,6 +41,6 @@ class Contact
 
     public function of($user_id)
     {
-        return db()->contactsOf($user_id, ['updated_at', 'desc']); // TODO: ordering this for json also
+        return db()->contactsOf($user_id, ['updated_at', 'desc']);
     }
 }

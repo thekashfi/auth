@@ -5,7 +5,7 @@ namespace App\Controllers;
 
 
 trait MiddlewaresTrait
-{ // TODO: write documentation for my framework features like: middleware, routing, viewsTemplateEngine
+{ // TODO: write documentation for my code. like: middleware, routing, viewsTemplateEngine
     public function loggedIn()
     {
         if (guest()) {

@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+    // get page number from url
     function page() {
         let params = new URLSearchParams(window.location.search)
 
@@ -9,7 +10,7 @@ $(document).ready(() => {
         return ''
     }
 
-    async function fetch() {
+    window.fetch = async function() {
         return await $.get("http://localhost/auth/api/list" + page(), function(data, status){
             window.data = data.results
             write(window.data)
@@ -23,14 +24,7 @@ $(document).ready(() => {
         .map(Item).join(''));
     }
 
-    fetch()
-        .then(() => {
-            feather.replace()
-            $('#spinner').hide()
-            $('#pagination').show()
-        })
-
-    /* Search */
+    // search
     window.search = function search(e) {
         let search = e.value
 

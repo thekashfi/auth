@@ -15,6 +15,7 @@ class MySql implements DriverInterface
     {
         $pdo = Connection::getInstance();
         $this->pdo = $pdo->connection();
+        $this->pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
     }
 
     public function all($table, $order = ['id', 'ASC'])
@@ -26,7 +27,7 @@ class MySql implements DriverInterface
         $sql = "SELECT * FROM {$table} ORDER BY {$order[0]} {$order[1]}";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_OBJ); // TODO: write fetch::obj mode once in the connecting time.
+        return $stmt->fetchAll();
     }
 
     public function find($table, $id)
@@ -34,7 +35,7 @@ class MySql implements DriverInterface
         $sql = "SELECT * FROM {$table} WHERE id = :id LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
-        return $stmt->fetchObject();
+        return $stmt->fetch();
     }
 
     public function insert($table, $values)
@@ -80,7 +81,7 @@ class MySql implements DriverInterface
         $sql = "SELECT * FROM users WHERE email = ? AND password = ? LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$email, $password]);
-        return $stmt->fetchObject();
+        return $stmt->fetch();
     }
     
     public function contactsOf($user_id, $order = ['id', 'ASC'])
@@ -97,7 +98,7 @@ class MySql implements DriverInterface
                 FROM contacts INNER JOIN users ON contacts.user_id = users.id WHERE user_id = ?  ORDER BY contacts.{$order[0]} {$order[1]}, contacts.id ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$user_id]);
-        $rows = $stmt->fetchAll(\PDO::FETCH_OBJ);
+        $rows = $stmt->fetchAll();
         return $this->arrangeContacts($rows);
     }
 
@@ -111,7 +112,7 @@ class MySql implements DriverInterface
                 FROM contacts INNER JOIN users ON contacts.user_id = users.id WHERE contacts.id = ? ORDER BY contacts.updated_at DESC, contacts.id DESC LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
-        $row = $stmt->fetch(\PDO::FETCH_OBJ);
+        $row = $stmt->fetch();
         if (! $row)
             return false;
         return $this->arrangeContacts($row);

@@ -48,15 +48,16 @@ class ContactsController
 
     public function update($contact_id)
     {
-        // TODO: validation all inputs
-        // TODO: json error return validation!
-
         $contact = (new Contact)->find($contact_id);
 
         if ((int) user()->id !== (int) $contact->user->id) {
             header('HTTP/1.1 403 Forbidden');
             die("OO oo! you can\'t edit this contact. go edit your contacts :|");
         }
+
+        // TODO: validation all inputs
+        $this->required($_POST['first_name'], 'first_name');
+        $this->maxLength($_POST['first_name'], 'first_name');
 
         $record['image'] = $contact->image;
 
@@ -87,7 +88,7 @@ class ContactsController
         }
 
         $image = $contact->image;
-        (new Contact)->delete($id); // TODO: repository pattern needed!
+        (new Contact)->delete($id); // TODO: Facade and singleton pattern needed!
 
         $this->deleteImage($image);
 

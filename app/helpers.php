@@ -66,7 +66,15 @@ function json() {
 }
 
 function flashBack($msg) {
+    if(strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+    {
+        die(json_encode(['msg' => $msg]));
+    }
     flash($msg);
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;
+}
+
+function routeIs($path) {
+    return trim(str_replace('/auth', '', $_SERVER['REQUEST_URI']), '/') === trim(strtolower($path), '/');
 }

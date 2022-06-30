@@ -17,7 +17,7 @@ class InstallController
             die('nothing found here.');
     }
 
-    public function mysql()
+    private function mysql()
     {
         try {
             $sql = "CREATE TABLE IF NOT EXISTS users (
@@ -91,7 +91,7 @@ class InstallController
         }
     }
 
-    public function json()
+    private function json()
     {
         json()->insert('users', [
             'id' => 1,

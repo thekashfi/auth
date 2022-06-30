@@ -10,7 +10,7 @@ interface DriverInterface
     public function update($table, $where, $values);
     public function delete($table, $id);
     public function findByEmailPass($email, $password);
-    public function contactsOf($user_id);
+    public function contactsOf($user_id, $order = ['id', 'ASC']);
     public function findContact($id);
     public function conn();
 }

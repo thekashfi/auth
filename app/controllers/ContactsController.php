@@ -99,9 +99,11 @@ class ContactsController
     {
         $path = $_FILES['image']['tmp_name'];
         $name = $oldImage;
+        $name = substr($name, 0, strrpos($name, '.'));
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $name = $name . $ext;
         $dir = ROOT . '/public/images';
-        $newPath = $dir . '/' . $name/* . '.' . $ext*/; // TODO: get uploaded image's extension.
+        $newPath = $dir . '/' . $name;
 
         if (file_exists($oldImage = $dir . '/' . $oldImage)) {
             unlink($oldImage);

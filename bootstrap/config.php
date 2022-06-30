@@ -2,6 +2,7 @@
 return [
     // GENERAL
     'url' => 'http://localhost/auth',
+    'per_page' => 2,
 
     // DATABASE
     'driver' => 'mysql',

@@ -29,7 +29,7 @@ class Core
         $this->callController();
     }
 
-    private function determineController() // TODO: change all methods and properties access level to minimum possible level.
+    private function determineController()
     {
         $controller = ucfirst($this->url[0]) . 'Controller';
         if (file_exists(ROOT . '/app/controllers/' . $controller . '.php')) {

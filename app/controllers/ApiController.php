@@ -14,10 +14,11 @@ class ApiController
             $user_id = user()->id;
             $contacts = (new Contact)->of($user_id);
         } else {
-            $contacts = (new Contact)->all();
+            $page = $_GET['page'] ?? 1; // TODO: improve pagination.
+            $contacts = (new Contact)->all($page, conf('per_page'));
         }
 
-        $contacts = $this->jsonFormat($contacts); // TODO: add pagination.
+        $contacts = $this->jsonFormat($contacts);
 
         header('Content-Type: application/json; charset=utf-8');
         echo $contacts;

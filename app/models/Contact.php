@@ -14,9 +14,9 @@ class Contact
         return asset("/images/{$image}");
     }
 
-    public function all()
+    public function all($page, $per_page)
     {
-        return db()->all('contacts', ['updated_at', 'desc']);
+        return db()->all('contacts', $page, $per_page, ['updated_at', 'desc']);
     }
 
     public function update($where, $contact)

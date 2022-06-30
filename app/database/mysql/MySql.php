@@ -18,14 +18,18 @@ class MySql implements DriverInterface
         $this->pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
     }
 
-    public function all($table, $order = ['id', 'ASC'])
+    public function all($table, $page, $per_page, $order = ['id', 'ASC'])
     {
         if (is_string($order)) {
             $order = [$order, "ASC"];
         }
 
-        $sql = "SELECT * FROM {$table} ORDER BY {$order[0]} {$order[1]}";
+        $start = ($page-1) * $per_page;
+
+        $sql = "SELECT * FROM {$table} ORDER BY {$order[0]} {$order[1]} LIMIT :offset, :per_page";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':offset', (int) $start, \PDO::PARAM_INT);
+        $stmt->bindValue(':per_page', (int) $per_page, \PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     }

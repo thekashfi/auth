@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Database\MySql;
+namespace App\Database\Mysql;
 
 use App\Database\DriverInterface;
 use App\Database\FormatRelations;
 
-class MySql implements DriverInterface
+class Mysql implements DriverInterface
 {
     use FormatRelations;
 

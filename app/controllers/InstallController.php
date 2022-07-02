@@ -87,7 +87,7 @@ class InstallController
 
         if (pdo()->exec($sql) == 2) {
             $href = url();
-            die("<b>Successfully</b> created tables and seeded some dummy data for <b>MySql</b>. now you can go to <a href='{$href}'>home page</a>.");
+            die("<b>Successfully</b> created tables and seeded some dummy data for <b>Mysql</b>. now you can go to <a href='{$href}'>home page</a>.");
         }
     }
 

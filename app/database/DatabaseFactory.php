@@ -2,18 +2,19 @@
 
 namespace App\Database;
 
-use App\Database\MySql\Connection;
+use App\Database\Mysql\Connection;
 
 class DatabaseFactory
 {
     public static function getConnection($type)
     {
-        switch ($type) {
-            default:
-            case 'mysql':
-                return new MySql\MySql;
-            case 'json':
-                return new Json\Json;
+        $type = strtolower($type);
+        $name = ucfirst(strtolower($type));
+        $class = "App\\Database\\$name\\$name";
+        if (file_exists(ROOT . "/app/database/{$type}/{$name}.php") &&
+            class_exists($class)) {
+            return new $class;
         }
+        die("database driver '{$type}' is not installed!");
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\MySql;
+namespace App\Database\Mysql;
 
 use PDO;
 

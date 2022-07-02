@@ -37,7 +37,9 @@ class Core
         }
 
         $controller = "App\\Controllers\\{$this->controller}";
-        return new $controller;
+        if (class_exists($controller))
+            return new $controller;
+        die("class $controller does not exists.");
     }
 
     private function determineMethod()

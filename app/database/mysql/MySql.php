@@ -18,7 +18,7 @@ class MySql implements DriverInterface
         $this->pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
     }
 
-    public function all($table, $page, $per_page, $order = ['id', 'ASC'])
+    public function all(string $table, int $page, int $per_page, mixed $order = ['id', 'ASC']): array | false
     {
         if (is_string($order)) {
             $order = [$order, "ASC"];
@@ -34,7 +34,7 @@ class MySql implements DriverInterface
         return $stmt->fetchAll();
     }
 
-    public function find($table, $id)
+    public function find(string $table, int $id): array | false
     {
         $sql = "SELECT * FROM {$table} WHERE id = :id LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
@@ -42,7 +42,7 @@ class MySql implements DriverInterface
         return $stmt->fetch();
     }
 
-    public function insert($table, $values)
+    public function insert(string $table, array $values): int | false
     {
         [$keys, $vals] = ['', ''];
         foreach ($values as $k => $v) {
@@ -58,7 +58,7 @@ class MySql implements DriverInterface
         return false;
     }
 
-    public function update($table, $where, $values)
+    public function update(string $table, array $where, array $values): bool
     {
         $str = '';
         foreach ($values as $k => $v) {
@@ -71,7 +71,7 @@ class MySql implements DriverInterface
         return $stmt->execute(array_merge([$where[0] => $where[2]], $values));
     }
 
-    public function delete($table, $id)
+    public function delete(string $table, int $id): bool
     {
         $sql = "DELETE FROM {$table} WHERE id = :id";
         if ($this->pdo->prepare($sql)->execute(['id' => $id])) {
@@ -80,7 +80,7 @@ class MySql implements DriverInterface
         return false;
     }
 
-    public function findByEmailPass($email, $password)
+    public function findByEmailPass(string $email, string $password): \stdClass | false
     {
         $sql = "SELECT * FROM users WHERE email = ? AND password = ? LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
@@ -88,7 +88,7 @@ class MySql implements DriverInterface
         return $stmt->fetch();
     }
     
-    public function contactsOf($user_id, $order = ['id', 'ASC'])
+    public function contactsOf(int $user_id, mixed $order = ['id', 'ASC']): iterable
     {
         if (is_string($order)) {
             $order = [$order, "ASC"];
@@ -106,7 +106,7 @@ class MySql implements DriverInterface
         return $this->arrangeContacts($rows);
     }
 
-    public function findContact($id)
+    public function findContact(int $id): \stdClass | false
     {
         $sql = "SELECT users.*,
                         contacts.*,
@@ -122,7 +122,7 @@ class MySql implements DriverInterface
         return $this->arrangeContacts($row);
     }
 
-    public function conn()
+    public function conn(): \PDO
     {
         return $this->pdo;
     }

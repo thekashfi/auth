@@ -5,7 +5,7 @@ return [
     'per_page' => 2,
 
     // DATABASE
-    'driver' => 'mysql',
+    'driver' => 'json',
 
     'host' => 'localhost',
     'database' => 'auth',

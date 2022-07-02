@@ -75,6 +75,6 @@ function flashBack($msg) {
     exit;
 }
 
-function routeIs($path) {
+function routeIs($path) { // TODO: remove parameters from end of the route
     return trim(str_replace('/auth', '', $_SERVER['REQUEST_URI']), '/') === trim(strtolower($path), '/');
 }

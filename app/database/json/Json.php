@@ -18,9 +18,9 @@ class Json implements DriverInterface
         $this->id = ['id' => rand(1, 1000)];
     }
 
-    public function all($table, $order = ['id', 'ASC'])
+    public function all(string $table, int $page, int $per_page, mixed $order = ['id', 'ASC']): \stdClass | false
     {
-        if (is_string($order)) {
+        if (is_string($order)) { // TODO: implement pagination in json also
             $order = [$order, "ASC"];
         }
         $order[1] = strtoupper($order[1]) === 'ASC' ? JSONDB::ASC : JSONDB::DESC;
@@ -32,7 +32,7 @@ class Json implements DriverInterface
         return $this->format($users ?? false);
     }
 
-    public function find($table, $id)
+    public function find(string $table, int $id) : \stdClass | false
     {
         $row = $this->json->select('*')
             ->from("{$table}.json")
@@ -41,7 +41,7 @@ class Json implements DriverInterface
         return $this->format($row[0] ?? false);
     }
 
-    public function insert($table, $values)
+    public function insert(string $table, array $values) : int
     {
         $timestamps = $table == 'users' ? ['created_at' => time()] : ['created_at' => time(), 'updated_at' => time()];
         $this->json->insert("{$table}.json",
@@ -50,7 +50,7 @@ class Json implements DriverInterface
         return $this->id['id'];
     }
 
-    public function update($table, $where, $values)
+    public function update(string $table, array $where, array $values): bool
     {
         $values = array_merge($values, ['updated_at' => time()]);
         $this->json->update($values)
@@ -60,15 +60,16 @@ class Json implements DriverInterface
         return true;
     }
 
-    public function delete($table, $id)
+    public function delete(string $table, int $id): bool
     {
         $this->json->delete()
             ->from("{$table}.json")
             ->where(['id' => $id])
             ->trigger();
+        return true;
     }
 
-    public function findByEmailPass($email, $password)
+    public function findByEmailPass(string $email, string $password): \stdClass | false
     {
         $user = $this->json->select('*')
             ->from("users.json")
@@ -77,7 +78,7 @@ class Json implements DriverInterface
         return $this->format($user[0] ?? false);
     }
 
-    public function contactsOf($user_id, $order = ['id', 'ASC']) // TODO: fix code duplication in these two method. (ask)
+    public function contactsOf(int $user_id, mixed $order = ['id', 'ASC']): iterable | false // TODO: fix code duplication in these two method. (ask)
     {
         if (is_string($order)) {
             $order = [$order, "ASC"];
@@ -94,27 +95,13 @@ class Json implements DriverInterface
             return false;
 
         foreach ($contacts as $contact) {
-            $user = $this->json->select('*')
-                ->from("users.json")
-                ->where(['id' => $contact['user_id']])
-                ->get();
-
-            if (! $user)
-                return false;
-            $user = $user[0];
-
-            $u['uid'] = $user['id'];
-            $u['name'] = $user['name'];
-            $u['uemail'] = $user['email'];
-            $u['password'] = $user['password'];
-            $u['ucreated_at'] = $user['created_at'];
-
-            $c[] = array_merge($contact, $u);
+            $user = $this->getUser($contact['user_id']);
+            $c[] = array_merge($contact, $user);
         }
         return $this->arrangeContacts($this->format($c));
     }
 
-    public function findContact($id)
+    public function findContact(int $id): \stdClass | false
     {
         $contact = $this->json->select('*')
             ->from("contacts.json")
@@ -125,9 +112,26 @@ class Json implements DriverInterface
             return false;
         $contact = $contact[0];
 
+        $user = $this->getUser($contact['user_id']);
+
+        return $this->arrangeContacts($this->format(array_merge($contact, $user)));
+    }
+
+    public function conn(): JSONDB
+    {
+        return new JSONDB(ROOT . '/app/database/json/jsons');
+    }
+
+    private function format($users)
+    {
+        return json_decode(json_encode($users));
+    }
+
+    private function getUser(int $user_id): array | false
+    {
         $user = $this->json->select('*')
             ->from("users.json")
-            ->where(['id' => $contact['user_id']])
+            ->where(['id' => $user_id])
             ->get();
 
         if (! $user)
@@ -139,18 +143,7 @@ class Json implements DriverInterface
         $u['uemail'] = $user['email'];
         $u['password'] = $user['password'];
         $u['ucreated_at'] = $user['created_at'];
-
-        return $this->arrangeContacts($this->format(array_merge($contact, $u)));
-    }
-
-    public function conn()
-    {
-        return new JSONDB(ROOT . '/app/database/json/jsons');
-    }
-
-    private function format($users)
-    {
-        return json_decode(json_encode($users));
+        return $u;
     }
 
 }

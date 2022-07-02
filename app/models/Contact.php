@@ -14,7 +14,7 @@ class Contact
         return asset("/images/{$image}");
     }
 
-    public function all($page, $per_page)
+    public function all($page, $per_page) : array | false | \stdClass
     {
         return db()->all('contacts', $page, $per_page, ['updated_at', 'desc']);
     }
